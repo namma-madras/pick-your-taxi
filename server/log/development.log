@@ -1,0 +1,2 @@
+{"datetime":"2022-5-27 15:19:52","level":"info","message":"🔥[REDIS]: connected at PORT: 6379","service":"application"}
+{"datetime":"2022-5-27 15:19:52","level":"info","message":"⚡️[API]: started at PORT:3000","service":"application"}

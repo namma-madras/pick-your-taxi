@@ -1,0 +1,7 @@
+{"datetime":"2022-5-27 15:20:2","level":"info","message":"🔥[REDIS]: connected at PORT: 6379","service":"application"}
+{"datetime":"2022-5-27 15:20:2","level":"info","message":"⚡️[API]: started at PORT:3000","service":"application"}
+{"datetime":"2022-5-27 15:20:46","level":"info","message":"🔥[REDIS]: connected at PORT: 6379","service":"application"}
+{"datetime":"2022-5-27 15:20:46","level":"info","message":"⚡️[API]: started at PORT:3000","service":"application"}
+{"datetime":"2022-5-27 15:21:1","level":"info","message":"🔥[REDIS]: connected at PORT: 6379","service":"application"}
+{"datetime":"2022-5-27 15:21:1","level":"info","message":"⚡️[API]: started at PORT:3000","service":"application"}
+{"datetime":"2022-5-27 15:21:14","id":"d5541a0e-2e4d-4911-b52b-729482f397d3","level":"info","message":"[d5541a0e-2e4d-4911-b52b-729482f397d3] Request","method":"GET","params":{},"service":"application","status":"200","url":"/"}
