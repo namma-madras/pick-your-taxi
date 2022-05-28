@@ -1,0 +1,21 @@
+version: 2.1
+jobs:
+  build_docker_artifacts:
+    docker:
+      - image: circleci/node:17
+    environment:
+      IMAGE_NAME: test
+      TAG: 0.0.1
+    steps:
+      - checkout
+      - setup_remote_docker: 
+          version: 20.10.14
+          docker_layer_caching: true
+      - run:
+          name:  Build Docker Images
+          command: |
+            export TAG=$TAG
+            export IMAGE_NAME=$IMAGE_NAME
+            docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push $DOCKER_LOGIN/$IMAGE_NAME

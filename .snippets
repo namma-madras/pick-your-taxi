@@ -1,5 +1,45 @@
 # For starting local development environment
-    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+--------------------------------------------
+docker-compose up
 
-# For starting in production environment
-    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+# provide state
+---------------
+kubectl apply -f <config_file>
+
+# retriving cluster info
+------------------------
+kubectl get pods
+kubectl get deployment
+kubectl get replicaset
+kubectl get deployment <name> -o yaml
+kubectl get secret
+kubectl describe pod <name>
+kubectl describe deployment <name>
+kubectl get service
+kubectl get namespace
+kubectl api-resources --namespaced=false
+kubectl api-resources --namespaced=true
+kubectl get all --all-namespaces
+kubectl get all
+kubectl config view
+
+# helm
+------
+helm pull <repo_name/package>
+helm install <repo_name/package>
+helm upgrade
+helm template <repo_name/package>
+helm template <repo_name/package> --set key.value=x
+helm list
+helm uninstall <repo_name/package>
+
+# For getting logs and to exec into the bash
+--------------------------------------------
+kubectl logs <pod_name>
+kubectl exec -it <pod_name> -- bin/bash
+
+# Deployments
+-------------
+kubectl create deployment <name>
+kubectl delete deployment <name>
+kubectl edit deployment <name>

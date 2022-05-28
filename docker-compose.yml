@@ -1,5 +1,18 @@
 version: "3.9"
 services:
+  api_dev_server:
+    command: npm run dev
+    build:
+      context: ./server
+      target: base
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./server/.env.development
+    depends_on:
+      - redis
+    volumes:
+      - ./server:/app
   redis:
     image: redis:7.0-alpine
     restart: always
