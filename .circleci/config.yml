@@ -2,6 +2,7 @@ version: 2.1
 
 jobs:
   build:
+    working_directory: ./server
     docker:
       - image: circleci/node:17
     environment:
