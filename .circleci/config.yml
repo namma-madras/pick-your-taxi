@@ -2,7 +2,6 @@ version: 2.1
 
 jobs:
   build:
-    working_directory: ./server
     docker:
       - image: circleci/node:17
     resource_class: small
@@ -17,6 +16,7 @@ jobs:
       - run:
           name:  Build Docker Images
           command: |
+            cd server
             export TAG=$TAG
             export IMAGE_NAME=$IMAGE_NAME
             docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
