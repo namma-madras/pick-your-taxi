@@ -16,6 +16,6 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.listen(port, async () => {
-  await redisInstance.connect()
+  // await redisInstance.connect()
   applicationLogger.logInfo(`⚡️[API]: started at PORT:${port}`);
 });
