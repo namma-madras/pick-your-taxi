@@ -15,4 +15,4 @@ FROM base AS release
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 USER node
-CMD ["node", "./dist/server.js"]
+CMD ["node", "./dist/index.js"]
