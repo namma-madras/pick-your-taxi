@@ -14,19 +14,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const redis_cache_1 = require("./src/services/redis-cache");
 const logger_1 = __importDefault(require("./src/middlewares/logger"));
 const application_logger_1 = __importDefault(require("./src/logger/application-logger"));
 const requestId_1 = __importDefault(require("./src/middlewares/requestId"));
+const errorHandler_1 = __importDefault(require("./src/middlewares/errorHandler"));
+const requestStart_1 = __importDefault(require("./src/middlewares/requestStart"));
+const Prometheus = require('prom-client');
+const requestHistogram = new Prometheus.Histogram({
+    name: 'http_request_duration_ms',
+    help: 'Duration of HTTP requests in ms',
+    labelNames: ['method', 'route', 'code'],
+    buckets: [0.10, 5, 15, 50, 100, 200, 300, 400, 500] // buckets for response time from 0.1ms to 500ms
+});
+const metricsInterval = Prometheus.collectDefaultMetrics();
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+// register middlewares
+app.use(requestStart_1.default);
 app.use((0, requestId_1.default)());
 app.use(logger_1.default);
-const port = process.env.API_SERVER_PORT;
+app.use((req, res, next) => {
+    const responseTimeInMs = Date.now() - res.locals.startEpoch;
+    requestHistogram.labels(req.method, req.path, res.statusCode)
+        .observe(responseTimeInMs);
+    next();
+});
+app.use(errorHandler_1.default);
+app.get('/metrics', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.set('Content-Type', Prometheus.register.contentType);
+    res.send(yield Prometheus.register.metrics());
+}));
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server');
 });
-app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
-    yield redis_cache_1.redisInstance.connect();
-    application_logger_1.default.logInfo(`⚡️[API]: started at PORT:${port}`);
+const server = app.listen(process.env.API_SERVER_PORT, () => __awaiter(void 0, void 0, void 0, function* () {
+    // await redisInstance.connect()
+    application_logger_1.default.logInfo(`⚡️[API]: started at PORT:${process.env.API_SERVER_PORT}`);
 }));
+// Graceful shutdown
+process.on('SIGTERM', () => {
+    clearInterval(metricsInterval);
+    server.close((err) => {
+        if (err) {
+            console.error(err);
+            process.exit(1);
+        }
+        process.exit(0);
+    });
+});

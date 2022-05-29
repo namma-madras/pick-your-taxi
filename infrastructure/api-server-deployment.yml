@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-server
+spec:
+  selector:
+    matchLabels:
+      app: api-server
+  template:
+    metadata:
+      labels:
+        app: api-server
+    spec:
+      containers:
+      - name: api-server
+        imagePullPolicy: Always
+        image: masterofnode/test:latest
+        ports:
+        - containerPort: 3000
+        env:
+          - name: NODE_ENV
+            value: production
+          - name: API_SERVER_PORT
+            value: '3000'
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"

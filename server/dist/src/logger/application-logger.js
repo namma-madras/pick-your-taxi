@@ -23,6 +23,14 @@ class ApplicationLogger extends logger_1.default {
             message: message
         });
     }
+    logError(error) {
+        this.logToConsole(error);
+        this.log({
+            level: 'error',
+            message: error,
+            metaData: error
+        });
+    }
     logRequest(requestOptions) {
         this.logToConsole(`[${requestOptions.id}] method:${requestOptions.method} params:${JSON.stringify(requestOptions.params)} url: ${requestOptions.url} status: ${requestOptions.status}`);
         this.log({
