@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json /app/
 RUN npm install
 COPY . /app
-
+RUN ls
 RUN npm run build
 RUN npm prune --production # Remove dev dependencies
 
