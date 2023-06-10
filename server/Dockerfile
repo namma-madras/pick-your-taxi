@@ -12,7 +12,7 @@
 # CMD ["node", "./dist/index.js"]
 
 FROM node:17.0.1-alpine
-COPY package.json /
+COPY package.json .
 RUN npm install --production
 COPY . .
 RUN ls
