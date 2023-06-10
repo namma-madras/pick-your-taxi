@@ -15,7 +15,7 @@ FROM node:17.0.1-alpine
 WORKDIR /app
 COPY package.json /app/
 RUN npm install --production
-COPY /server /app
+COPY . /app
 RUN cd /app
 RUN ls
 RUN npm run build
