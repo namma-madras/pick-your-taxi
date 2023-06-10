@@ -13,7 +13,7 @@
 
 FROM node:17.0.1-alpine
 COPY package.json .
-RUN npm install --production
+RUN npm install
 COPY . .
 RUN ls
 RUN npm run build
