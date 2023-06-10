@@ -12,12 +12,9 @@
 # CMD ["node", "./dist/index.js"]
 
 FROM node:17.0.1-alpine
-WORKDIR /app
-COPY package.json /app/
+COPY package.json /
 RUN npm install --production
-COPY . /app
-RUN cd /app
-RUN cd server
+COPY . .
 RUN ls
 RUN npm run build
 CMD ["node", "./dist/index.js"]
