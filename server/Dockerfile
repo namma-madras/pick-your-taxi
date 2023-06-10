@@ -17,6 +17,7 @@ COPY package.json /app/
 RUN npm install --production
 COPY . /app
 RUN cd /app
+RUN ls
 RUN npm run build
 CMD ["node", "./dist/index.js"]
 
