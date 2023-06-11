@@ -37,7 +37,7 @@ app.get('/metrics', async (req: Request, res: Response) => {
 })
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server edited');
+  res.send('Express + TypeScript Server edited now');
 });
 
 const server = app.listen(process.env.API_SERVER_PORT, async () => {
